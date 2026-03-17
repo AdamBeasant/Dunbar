@@ -27,7 +27,6 @@ struct SettingsView: View {
     @AppStorage(AppSettings.snoozePreset2DaysKey) private var snoozePreset2Days = 3
     @AppStorage(AppSettings.snoozePreset3DaysKey) private var snoozePreset3Days = 7
     @AppStorage(AppSettings.ringMotionIntensityKey) private var ringMotionIntensityRaw = RingMotionIntensity.low.rawValue
-    @AppStorage(AppSettings.hapticsEnabledKey) private var hapticsEnabled = true
 
     @State private var simulatorCadence: Cadence = .weekly
     @State private var simulatorNeverContacted = true
@@ -199,13 +198,10 @@ struct SettingsView: View {
 
     private var motionAndHapticsCard: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("HAPTICS & MOTION")
+            Text("MOTION")
                 .font(DunbarTheme.eyebrowFont)
                 .foregroundStyle(DunbarTheme.textTertiary)
                 .tracking(0.8)
-
-            Toggle("Haptics", isOn: $hapticsEnabled)
-                .tint(DunbarTheme.ringColor(for: .core))
 
             Picker("Circle motion", selection: ringMotionIntensityBinding) {
                 ForEach(RingMotionIntensity.allCases) { intensity in

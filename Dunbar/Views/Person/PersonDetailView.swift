@@ -488,11 +488,12 @@ struct PersonDetailView: View {
                 .font(DunbarTheme.eyebrowFont)
                 .tracking(0.8)
                 .foregroundStyle(DunbarTheme.textTertiary)
-            
+
             if checkIns.isEmpty {
                 Text("No check-ins yet")
                     .font(.system(size: 14))
                     .foregroundStyle(DunbarTheme.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .dunbarCard()
             } else {
                 VStack(alignment: .leading, spacing: 0) {
@@ -503,6 +504,7 @@ struct PersonDetailView: View {
                 .dunbarCard()
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .transition(.opacity)
     }
     
@@ -643,7 +645,7 @@ struct PersonDetailView: View {
                 .font(DunbarTheme.eyebrowFont)
                 .tracking(0.8)
                 .foregroundStyle(DunbarTheme.textTertiary)
-            
+
             if checkIns.isEmpty {
                 Text("No recent check-ins")
                     .font(.system(size: 14))
@@ -654,6 +656,7 @@ struct PersonDetailView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .dunbarCard()
     }
     

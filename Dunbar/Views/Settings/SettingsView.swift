@@ -5,6 +5,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Environment(NudgeScheduler.self) private var nudgeScheduler
+    @Environment(PremiumManager.self) private var premiumManager
 
     let showsCloseButton: Bool
 
@@ -30,6 +31,7 @@ struct SettingsView: View {
     @State private var simulatorCadence: Cadence = .weekly
     @State private var simulatorNeverContacted = true
     @State private var simulatorDaysSinceContact = 0
+    @State private var showingPaywall = false
 
     init(showsCloseButton: Bool = false) {
         self.showsCloseButton = showsCloseButton
@@ -37,19 +39,7 @@ struct SettingsView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                header
-                reminderCard
-                reminderSimulatorCard
-                notificationControlsCard
-                quietHoursCard
-                weeklyGoalCard
-                actionsCard
-                footerBranding
-            }
-            .padding(.horizontal, 20)
-            .padding(.top, showsCloseButton ? 18 : 8)
-            .padding(.bottom, 28)
+            settingsContent
         }
         .background(DunbarTheme.background)
         .navigationTitle("")
@@ -76,6 +66,26 @@ struct SettingsView: View {
             simulatorNeverContacted = true
             simulatorDaysSinceContact = 0
         }
+        .sheet(isPresented: $showingPaywall) {
+            PaywallView()
+        }
+    }
+
+    private var settingsContent: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            header
+            premiumCard
+            reminderCard
+            reminderSimulatorCard
+            notificationControlsCard
+            quietHoursCard
+            weeklyGoalCard
+            actionsCard
+            footerBranding
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, showsCloseButton ? 18 : 8)
+        .padding(.bottom, 28)
     }
 
     private var header: some View {
@@ -89,6 +99,71 @@ struct SettingsView: View {
                 .foregroundStyle(DunbarTheme.textSecondary)
         }
         .padding(.bottom, 6)
+    }
+
+    private var premiumCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            if premiumManager.isPremium {
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.seal.fill")
+                        .font(.system(size: 18))
+                        .foregroundStyle(DunbarTheme.ringColor(for: .core))
+
+                    Text("Premium")
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .foregroundStyle(DunbarTheme.textPrimary)
+
+                    Spacer()
+
+                    Text("Active")
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundStyle(DunbarTheme.ringColor(for: .core))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(
+                            Capsule()
+                                .fill(DunbarTheme.ringColor(for: .core).opacity(0.12))
+                        )
+                }
+            } else {
+                HStack(spacing: 8) {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 16))
+                        .foregroundStyle(DunbarTheme.textSecondary)
+
+                    Text("Free Plan")
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .foregroundStyle(DunbarTheme.textPrimary)
+
+                    Spacer()
+
+                    Text("\(people.count)/\(Premium.freeTierPersonLimit) contacts")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(DunbarTheme.textSecondary)
+                }
+
+                Button {
+                    showingPaywall = true
+                } label: {
+                    Text("Upgrade to Premium")
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .dunbarPrimaryButton()
+            }
+
+            Button {
+                Task { await premiumManager.restorePurchases() }
+            } label: {
+                Text("Restore Purchases")
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundStyle(DunbarTheme.textSecondary)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .dunbarCard()
     }
 
     private var reminderCard: some View {
@@ -379,4 +454,5 @@ struct SettingsView: View {
     .environment(NudgeScheduler())
     .environment(AppLockManager())
     .environment(HapticFeedbackService())
+    .environment(PremiumManager())
 }

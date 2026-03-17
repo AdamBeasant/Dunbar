@@ -3,11 +3,13 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(AppLockManager.self) private var appLockManager
+    @Environment(PremiumManager.self) private var premiumManager
 
     @State private var selectedTab: AppTab = .rings
     @State private var navigationPath = NavigationPath()
     @State private var showingAddSheet = false
     @State private var showingSettingsSheet = false
+    @State private var showingPaywall = false
     @State private var showSplash = true
     @Query(filter: #Predicate<Person> { person in
         person.isArchived == false
@@ -102,6 +104,9 @@ struct ContentView: View {
         .sheet(isPresented: $showingAddSheet) {
             AddPersonView()
         }
+        .sheet(isPresented: $showingPaywall) {
+            PaywallView()
+        }
         .sheet(isPresented: $showingSettingsSheet) {
             NavigationStack {
                 SettingsView(showsCloseButton: true)
@@ -158,13 +163,17 @@ struct ContentView: View {
         .zIndex(999)
     }
 
-    /// Intercept the .add tab — open the sheet and snap back to the previous tab
+    /// Intercept the .add tab — open the sheet (or paywall) and snap back to the previous tab
     private var tabSelection: Binding<AppTab> {
         Binding(
             get: { selectedTab },
             set: { newTab in
                 if newTab == .add {
-                    showingAddSheet = true
+                    if !premiumManager.isPremium && people.count >= Premium.freeTierPersonLimit {
+                        showingPaywall = true
+                    } else {
+                        showingAddSheet = true
+                    }
                 } else {
                     selectedTab = newTab
                 }
@@ -180,4 +189,5 @@ struct ContentView: View {
         .environment(NudgeScheduler())
         .environment(AppLockManager())
         .environment(HapticFeedbackService())
+        .environment(PremiumManager())
 }

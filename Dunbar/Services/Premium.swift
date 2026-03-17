@@ -2,8 +2,8 @@ import Foundation
 import SwiftData
 
 enum Premium {
-    /// Free tier: up to 10 people
-    static let freeTierPersonLimit = 10
+    /// Free tier: up to 5 people (Inner circle)
+    static let freeTierPersonLimit = 5
     
     /// StoreKit product identifier for premium unlock
     static let productID = "com.handbook.dunbar.premium"

@@ -72,6 +72,7 @@ struct DunbarApp: App {
     @State private var nudgeScheduler = NudgeScheduler()
     @State private var appLockManager = AppLockManager()
     @State private var hapticFeedback = HapticFeedbackService()
+    @State private var premiumManager = PremiumManager()
     @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
@@ -80,6 +81,7 @@ struct DunbarApp: App {
                 .environment(nudgeScheduler)
                 .environment(appLockManager)
                 .environment(hapticFeedback)
+                .environment(premiumManager)
                 .task {
                     // Request notification permission on first launch
                     await nudgeScheduler.requestPermissionIfNeeded()

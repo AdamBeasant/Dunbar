@@ -4,6 +4,7 @@ import SwiftData
 struct RebalanceView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(NudgeScheduler.self) private var nudgeScheduler
+    @Environment(PremiumManager.self) private var premiumManager
     
     @Query(
         filter: #Predicate<Person> { !$0.isArchived },
@@ -31,29 +32,35 @@ struct RebalanceView: View {
         allSuggestions.filter { deferredSuggestionIDs.contains($0.id) }
     }
     
+    @State private var showingPaywall = false
+
     var body: some View {
         ZStack {
             DunbarTheme.background
                 .ignoresSafeArea()
-            
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    header
-                    
-                    if !activeSuggestions.isEmpty {
-                        activeSuggestionsCard
+
+            if premiumManager.isPremium {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        header
+
+                        if !activeSuggestions.isEmpty {
+                            activeSuggestionsCard
+                        }
+
+                        if !deferredSuggestions.isEmpty {
+                            deferredSuggestionsCard
+                        }
+
+                        historyCard
                     }
-                    
-                    if !deferredSuggestions.isEmpty {
-                        deferredSuggestionsCard
-                    }
-                    
-                    historyCard
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 14)
+                    .padding(.bottom, 26)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 20)
-                .padding(.top, 14)
-                .padding(.bottom, 26)
+            } else {
+                premiumUpgradePrompt
             }
         }
         .navigationTitle("Rebalance")
@@ -65,7 +72,44 @@ struct RebalanceView: View {
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
             }
         }
+        .sheet(isPresented: $showingPaywall) {
+            PaywallView()
+        }
         .onAppear(perform: reloadData)
+    }
+
+    private var premiumUpgradePrompt: some View {
+        VStack(spacing: 20) {
+            Spacer()
+
+            Image(systemName: "arrow.triangle.2.circlepath")
+                .font(.system(size: 44, weight: .light))
+                .foregroundStyle(DunbarTheme.ringColor(for: .core).opacity(0.6))
+
+            Text("Rebalancing is a premium feature")
+                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .foregroundStyle(DunbarTheme.textPrimary)
+                .multilineTextAlignment(.center)
+
+            Text("Get smart suggestions to promote or move contacts between circles based on your activity.")
+                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .foregroundStyle(DunbarTheme.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
+
+            Button {
+                showingPaywall = true
+            } label: {
+                Text("Unlock Premium")
+                    .font(.system(size: 17, weight: .semibold, design: .rounded))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+            }
+            .dunbarPrimaryButton()
+            .padding(.horizontal, 40)
+
+            Spacer()
+        }
     }
     
     private var header: some View {
@@ -309,4 +353,5 @@ struct RebalanceView: View {
     }
     .modelContainer(for: [Person.self, CheckIn.self, CareerRole.self, FamilyMember.self, FamilyPerson.self, FamilyRelationship.self, FamilyGraphV2.self, FamilyNodeV2.self, FamilyEdgeV2.self], inMemory: true)
     .environment(NudgeScheduler())
+    .environment(PremiumManager())
 }

@@ -22,8 +22,6 @@ struct SettingsView: View {
     @AppStorage(AppSettings.quietEndHourKey) private var quietEndHour = 8
     @AppStorage(AppSettings.quietEndMinuteKey) private var quietEndMinute = 0
     @AppStorage(AppSettings.weeklyGoalKey) private var weeklyGoal = 3
-    @AppStorage(AppSettings.appearanceModeKey) private var appearanceModeRaw = AppAppearance.system.rawValue
-
     @AppStorage(AppSettings.notificationSoundEnabledKey) private var notificationSoundEnabled = true
     @AppStorage(AppSettings.notificationBadgeEnabledKey) private var notificationBadgeEnabled = true
     @AppStorage(AppSettings.snoozePreset1DaysKey) private var snoozePreset1Days = 1
@@ -45,7 +43,6 @@ struct SettingsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 header
-                appearanceCard
                 reminderCard
                 reminderSimulatorCard
                 notificationControlsCard
@@ -54,6 +51,7 @@ struct SettingsView: View {
                 quietHoursCard
                 weeklyGoalCard
                 actionsCard
+                footerBranding
             }
             .padding(.horizontal, 20)
             .padding(.top, showsCloseButton ? 18 : 8)
@@ -173,28 +171,6 @@ struct SettingsView: View {
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(DunbarTheme.textTertiary)
             }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .dunbarCard()
-    }
-
-    private var appearanceCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("APPEARANCE")
-                .font(DunbarTheme.eyebrowFont)
-                .foregroundStyle(DunbarTheme.textTertiary)
-                .tracking(0.8)
-
-            Picker("Appearance", selection: appearanceBinding) {
-                ForEach(AppAppearance.allCases) { appearance in
-                    Text(appearance.label).tag(appearance)
-                }
-            }
-            .pickerStyle(.segmented)
-
-            Text("Choose System to match your iPhone setting.")
-                .font(.system(size: 13))
-                .foregroundStyle(DunbarTheme.textSecondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .dunbarCard()
@@ -365,6 +341,22 @@ struct SettingsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
+    private var footerBranding: some View {
+        VStack(spacing: 4) {
+            Text("Dunbar")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(DunbarTheme.textSecondary)
+            Text("Handbook Digital Limited")
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(DunbarTheme.textTertiary)
+            Text("v1.0.0")
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundStyle(DunbarTheme.textTertiary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 12)
+    }
+
     private var defaultReminderDateBinding: Binding<Date> {
         Binding(
             get: { timeDate(hour: defaultReminderHour, minute: defaultReminderMinute) },
@@ -394,17 +386,6 @@ struct SettingsView: View {
                 let components = Calendar.current.dateComponents([.hour, .minute], from: newValue)
                 quietEndHour = components.hour ?? 8
                 quietEndMinute = components.minute ?? 0
-            }
-        )
-    }
-
-    private var appearanceBinding: Binding<AppAppearance> {
-        Binding(
-            get: {
-                AppAppearance(rawValue: appearanceModeRaw) ?? .system
-            },
-            set: { newValue in
-                appearanceModeRaw = newValue.rawValue
             }
         )
     }

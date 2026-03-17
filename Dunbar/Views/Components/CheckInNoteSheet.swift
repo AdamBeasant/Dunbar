@@ -13,7 +13,7 @@ struct CheckInNoteSheet: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 14) {
                 Text("Add a note for \(personName)")
-                    .font(.system(size: 22, weight: .semibold, design: .serif))
+                    .font(.system(size: 22, weight: .semibold, design: .rounded))
                     .foregroundStyle(DunbarTheme.textPrimary)
                 
                 TextField(

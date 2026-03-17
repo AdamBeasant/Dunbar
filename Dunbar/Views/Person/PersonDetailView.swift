@@ -600,13 +600,13 @@ struct PersonDetailView: View {
                 .font(.system(size: 10, weight: .semibold))
                 .tracking(0.6)
                 .foregroundStyle(DunbarTheme.textSecondary)
-            
+
             if familySummaryRows.isEmpty {
                 Text("No family added")
                     .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(DunbarTheme.textSecondary)
             } else {
-                ForEach(Array(familySummaryRows.enumerated()), id: \.offset) { _, row in
+                ForEach(Array(familySummaryRows.prefix(3).enumerated()), id: \.offset) { _, row in
                     HStack(spacing: 4) {
                         Text(row.name)
                             .font(.system(size: 12, weight: .semibold))
@@ -618,9 +618,22 @@ struct PersonDetailView: View {
                             .lineLimit(1)
                     }
                 }
+
+                if familySummaryRows.count > 3 {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            selectedTab = .context
+                        }
+                    } label: {
+                        Text("View family tree (\(familySummaryRows.count))")
+                            .font(.system(size: 11, weight: .semibold, design: .rounded))
+                            .foregroundStyle(DunbarTheme.ringColor(for: .core))
+                    }
+                    .buttonStyle(.plain)
+                }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, minHeight: 112, alignment: .topLeading)
         .dunbarCard()
     }
 

@@ -58,58 +58,32 @@ struct ContentView: View {
 
     private var tabShell: some View {
         TabView(selection: tabSelection) {
-            NavigationStack(path: $navigationPath) {
-                GardenView(
-                    navigationPath: $navigationPath,
-                    onSettingsTap: { showingSettingsSheet = true }
-                )
-            }
-            .tabItem {
-                Label {
-                    Text("Circles")
-                } icon: {
-                    Image(systemName: "smallcircle.circle")
+            Tab("Circles", systemImage: "smallcircle.circle", value: Tab.rings) {
+                NavigationStack(path: $navigationPath) {
+                    GardenView(
+                        navigationPath: $navigationPath,
+                        onSettingsTap: { showingSettingsSheet = true }
+                    )
                 }
             }
-            .tag(Tab.rings)
 
-            NavigationStack {
-                NudgeListView(onSettingsTap: { showingSettingsSheet = true })
-            }
-            .tabItem {
-                Label {
-                    Text("Nudges")
-                } icon: {
-                    Image(systemName: "bell")
+            Tab("Nudges", systemImage: "bell", value: Tab.nudges) {
+                NavigationStack {
+                    NudgeListView(onSettingsTap: { showingSettingsSheet = true })
                 }
             }
             .badge(overdueCount)
-            .tag(Tab.nudges)
 
-            NavigationStack {
-                HistoryView(onSettingsTap: { showingSettingsSheet = true })
-            }
-            .tabItem {
-                Label {
-                    Text("Rhythm")
-                } icon: {
-                    Image(systemName: "chart.bar")
+            Tab("Rhythm", systemImage: "chart.bar", value: Tab.history) {
+                NavigationStack {
+                    HistoryView(onSettingsTap: { showingSettingsSheet = true })
                 }
             }
-            .tag(Tab.history)
 
-            // + tab — never actually shown, intercepted to open sheet
-            Color.clear
-                .tabItem {
-                    Label {
-                        Text("Add")
-                    } icon: {
-                        Image(systemName: "person.badge.plus")
-                    }
-                }
-                .tag(Tab.add)
+            Tab("Add", systemImage: "person.badge.plus", value: Tab.add) {
+                Color.clear
+            }
         }
-        .environment(\.symbolVariants, .none)
         .tint(DunbarTheme.ringColor(for: .core))
         .toolbarBackground(.clear, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)

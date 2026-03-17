@@ -65,7 +65,11 @@ struct ContentView: View {
                 )
             }
             .tabItem {
-                Label("Circles", systemImage: selectedTab == .rings ? "smallcircle.filled.circle.fill" : "smallcircle.circle")
+                Label {
+                    Text("Circles")
+                } icon: {
+                    Image(systemName: "smallcircle.circle")
+                }
             }
             .tag(Tab.rings)
 
@@ -73,7 +77,11 @@ struct ContentView: View {
                 NudgeListView(onSettingsTap: { showingSettingsSheet = true })
             }
             .tabItem {
-                Label("Nudges", systemImage: selectedTab == .nudges ? "bell.fill" : "bell")
+                Label {
+                    Text("Nudges")
+                } icon: {
+                    Image(systemName: "bell")
+                }
             }
             .badge(overdueCount)
             .tag(Tab.nudges)
@@ -82,17 +90,26 @@ struct ContentView: View {
                 HistoryView(onSettingsTap: { showingSettingsSheet = true })
             }
             .tabItem {
-                Label("Rhythm", systemImage: selectedTab == .history ? "chart.bar.fill" : "chart.bar")
+                Label {
+                    Text("Rhythm")
+                } icon: {
+                    Image(systemName: "chart.bar")
+                }
             }
             .tag(Tab.history)
 
             // + tab — never actually shown, intercepted to open sheet
             Color.clear
                 .tabItem {
-                    Label("Add", systemImage: selectedTab == .add ? "person.fill.badge.plus" : "person.badge.plus")
+                    Label {
+                        Text("Add")
+                    } icon: {
+                        Image(systemName: "person.badge.plus")
+                    }
                 }
                 .tag(Tab.add)
         }
+        .environment(\.symbolVariants, .none)
         .tint(DunbarTheme.ringColor(for: .core))
         .toolbarBackground(.clear, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)

@@ -606,7 +606,7 @@ struct PersonDetailView: View {
                     .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(DunbarTheme.textSecondary)
             } else {
-                ForEach(Array(familySummaryRows.prefix(2).enumerated()), id: \.offset) { _, row in
+                ForEach(Array(familySummaryRows.enumerated()), id: \.offset) { _, row in
                     HStack(spacing: 4) {
                         Text(row.name)
                             .font(.system(size: 12, weight: .semibold))
@@ -618,18 +618,12 @@ struct PersonDetailView: View {
                             .lineLimit(1)
                     }
                 }
-                
-                if familySummaryRows.count > 2 {
-                    Text("+\(familySummaryRows.count - 2) more")
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(DunbarTheme.textTertiary)
-                }
             }
         }
-        .frame(maxWidth: .infinity, minHeight: 112, alignment: .topLeading)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
         .dunbarCard()
     }
-    
+
     private var recentCatchupsCard: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("RECENT CATCH-UPS")

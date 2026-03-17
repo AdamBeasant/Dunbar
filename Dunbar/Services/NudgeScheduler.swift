@@ -84,7 +84,11 @@ final class NudgeScheduler {
                 content: content,
                 trigger: trigger
             )
-            try? await center.add(request)
+            do {
+                try await center.add(request)
+            } catch {
+                print("[NudgeScheduler] Failed to add notification: \(error)")
+            }
             return
         }
         
@@ -107,10 +111,13 @@ final class NudgeScheduler {
     }
     
     /// Reschedule nudges for all people. Call on app launch and after any changes.
+    /// Removes all pending requests first, then schedules new ones.
     func rescheduleAll(people: [Person]) async {
+        // Build all requests first, then swap atomically to minimize the gap
+        // where no notifications are pending.
+        let activePeople = people.filter { !$0.isArchived }
         center.removeAllPendingNotificationRequests()
-        
-        for person in people where !person.isArchived {
+        for person in activePeople {
             await schedule(for: person)
         }
     }
@@ -129,6 +136,7 @@ final class NudgeScheduler {
         reminderHour: Int,
         reminderMinute: Int,
         snoozedUntilAt: Date? = nil,
+        ring: DunbarRing = .meaningful,
         now: Date = .now
     ) -> Date? {
         let calendar = Calendar.current
@@ -171,7 +179,8 @@ final class NudgeScheduler {
             calendar.dateComponents([.day], from: lastContactedAt, to: now).day ?? 0,
             0
         )
-        let daysUntilDue = cadence.days - daysSinceContact
+        let effectiveDays = PlantHealthCalculator.effectiveCadenceDays(cadence: cadence, ring: ring)
+        let daysUntilDue = effectiveDays - daysSinceContact
         
         let dueDate: Date
         if daysUntilDue <= 0 {
@@ -198,6 +207,7 @@ final class NudgeScheduler {
         reminderHour: Int,
         reminderMinute: Int,
         snoozedUntilAt: Date? = nil,
+        ring: DunbarRing = .meaningful,
         count: Int = 3,
         now: Date = .now
     ) -> [Date] {
@@ -216,6 +226,7 @@ final class NudgeScheduler {
                 reminderHour: reminderHour,
                 reminderMinute: reminderMinute,
                 snoozedUntilAt: snoozedUntilAt,
+                ring: ring,
                 now: referenceNow
             ) else {
                 break
@@ -265,7 +276,11 @@ final class NudgeScheduler {
                 content: content,
                 trigger: trigger
             )
-            try? await center.add(request)
+            do {
+                try await center.add(request)
+            } catch {
+                print("[NudgeScheduler] Failed to add notification: \(error)")
+            }
             return
         }
         
@@ -282,7 +297,11 @@ final class NudgeScheduler {
             content: content,
             trigger: trigger
         )
-        try? await center.add(request)
+        do {
+            try await center.add(request)
+        } catch {
+            print("[NudgeScheduler] Failed to add notification: \(error)")
+        }
     }
     
     /// When should we nudge? At the cadence boundary.
@@ -294,7 +313,8 @@ final class NudgeScheduler {
             hasPriorContact: !person.checkIns.isEmpty,
             reminderHour: person.reminderHour,
             reminderMinute: person.reminderMinute,
-            snoozedUntilAt: person.snoozedUntilAt
+            snoozedUntilAt: person.snoozedUntilAt,
+            ring: person.ring
         )
     }
     
@@ -316,7 +336,8 @@ final class NudgeScheduler {
         } else if quietStart > quietEnd {
             inQuietHours = candidate >= quietStart || candidate < quietEnd
         } else {
-            inQuietHours = true
+            // Start == end means no quiet window — disable quiet hours
+            inQuietHours = false
         }
         
         guard inQuietHours else {

@@ -471,10 +471,21 @@ struct AddPersonView: View {
         .onChange(of: selectedPhoto) { _, newItem in
             Task {
                 if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                    // Compress to JPEG to keep storage small
-                    if let uiImage = UIImage(data: data),
-                       let jpeg = uiImage.jpegData(compressionQuality: 0.7) {
-                        photoData = jpeg
+                    // Reject files larger than 10 MB to prevent memory issues
+                    guard data.count <= 10_000_000 else { return }
+                    // Compress to JPEG and downscale to keep storage small
+                    if let uiImage = UIImage(data: data) {
+                        let maxDimension: CGFloat = 800
+                        let scaled: UIImage
+                        if max(uiImage.size.width, uiImage.size.height) > maxDimension {
+                            let scale = maxDimension / max(uiImage.size.width, uiImage.size.height)
+                            let newSize = CGSize(width: uiImage.size.width * scale, height: uiImage.size.height * scale)
+                            let renderer = UIGraphicsImageRenderer(size: newSize)
+                            scaled = renderer.image { _ in uiImage.draw(in: CGRect(origin: .zero, size: newSize)) }
+                        } else {
+                            scaled = uiImage
+                        }
+                        photoData = scaled.jpegData(compressionQuality: 0.7) ?? data
                     } else {
                         photoData = data
                     }
@@ -766,7 +777,7 @@ struct AddPersonView: View {
             }
         }
 
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
 
     private func relationshipSpec(for kind: DraftFamilyConnectionKind) -> (type: FamilyRelationshipType, newNodeIsFrom: Bool) {

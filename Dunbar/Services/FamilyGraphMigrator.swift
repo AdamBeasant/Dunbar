@@ -14,7 +14,7 @@ enum FamilyGraphMigrator {
         }
         
         if didChange {
-            try? context.save()
+            do { try context.save() } catch { print("[Dunbar] Migration save failed: \(error)") }
         }
     }
     

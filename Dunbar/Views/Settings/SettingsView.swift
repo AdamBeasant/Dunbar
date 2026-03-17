@@ -448,7 +448,7 @@ struct SettingsView: View {
             person.reminderHour = min(max(defaultReminderHour, 0), 23)
             person.reminderMinute = min(max(defaultReminderMinute, 0), 59)
         }
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
         rescheduleAll()
     }
 

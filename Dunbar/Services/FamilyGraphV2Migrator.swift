@@ -13,7 +13,7 @@ enum FamilyGraphV2Migrator {
         }
 
         FamilyGraphV2Service.pruneOrphans(context: context)
-        try? context.save()
+        do { try context.save() } catch { print("[Dunbar] V2 migration save failed: \(error)") }
         AppSettings.isFamilyGraphV2MigrationComplete = true
     }
 

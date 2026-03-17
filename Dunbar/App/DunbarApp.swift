@@ -107,6 +107,16 @@ struct DunbarApp: App {
                 }
             } else if newPhase == .inactive || newPhase == .background {
                 appLockManager.lockIfNeeded()
+                // Update widget snapshot before backgrounding so it stays fresh
+                let context = sharedModelContainer.mainContext
+                let descriptor = FetchDescriptor<Person>(
+                    predicate: #Predicate { !$0.isArchived }
+                )
+                if let people = try? context.fetch(descriptor) {
+                    WidgetSnapshotStore.write(
+                        WidgetSnapshotStore.buildSnapshot(people: people)
+                    )
+                }
             }
         }
     }

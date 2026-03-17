@@ -67,7 +67,7 @@ enum PlantHealthCalculator {
         }
     }
     
-    private static func effectiveCadenceDays(cadence: Cadence, ring: DunbarRing) -> Int {
+    static func effectiveCadenceDays(cadence: Cadence, ring: DunbarRing) -> Int {
         let multiplier: Double
         
         switch ring {

@@ -3,6 +3,7 @@ import SwiftData
 
 @Model
 final class Person {
+    var stableID: UUID = UUID()
     var name: String = ""
     var initials: String = ""
     var cadenceRaw: String = "monthly"

@@ -364,7 +364,7 @@ struct NudgeListView: View {
     }
 
     private func personKey(for person: Person) -> String {
-        String(describing: person.persistentModelID)
+        person.stableID.uuidString
     }
 
     private func nudgeComparator(_ a: Person, _ b: Person) -> Bool {

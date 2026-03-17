@@ -47,13 +47,11 @@ struct PersonDetailView: View {
     @GestureState private var previewTreeGestureOffset: CGSize = .zero
     
     private var checkIns: [CheckIn] {
-        allCheckIns
-            .filter { $0.person?.persistentModelID == person.persistentModelID }
-            .sorted { $0.contactedAt > $1.contactedAt }
+        person.checkIns.sorted { $0.contactedAt > $1.contactedAt }
     }
     
     private var activeCadenceRecommendation: SmartCadenceRecommendation? {
-        let key = String(describing: person.persistentModelID)
+        let key = person.stableID.uuidString
         guard !AppSettings.isSmartCadenceDismissed(personKey: key) else {
             return nil
         }
@@ -292,9 +290,19 @@ struct PersonDetailView: View {
         .onChange(of: selectedPhoto) { _, newItem in
             Task {
                 if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                    if let uiImage = UIImage(data: data),
-                       let jpeg = uiImage.jpegData(compressionQuality: 0.7) {
-                        person.photoData = jpeg
+                    guard data.count <= 10_000_000 else { return }
+                    if let uiImage = UIImage(data: data) {
+                        let maxDimension: CGFloat = 800
+                        let scaled: UIImage
+                        if max(uiImage.size.width, uiImage.size.height) > maxDimension {
+                            let scale = maxDimension / max(uiImage.size.width, uiImage.size.height)
+                            let newSize = CGSize(width: uiImage.size.width * scale, height: uiImage.size.height * scale)
+                            let renderer = UIGraphicsImageRenderer(size: newSize)
+                            scaled = renderer.image { _ in uiImage.draw(in: CGRect(origin: .zero, size: newSize)) }
+                        } else {
+                            scaled = uiImage
+                        }
+                        person.photoData = scaled.jpegData(compressionQuality: 0.7) ?? data
                     } else {
                         person.photoData = data
                     }
@@ -1156,7 +1164,7 @@ struct PersonDetailView: View {
         withAnimation(.easeInOut(duration: 0.2)) {
             person.cadence = recommendation.recommendedCadence
         }
-        AppSettings.clearSmartCadenceDismissal(personKey: String(describing: person.persistentModelID))
+        AppSettings.clearSmartCadenceDismissal(personKey: person.stableID.uuidString)
         haptics.success()
         
         Task {
@@ -1167,7 +1175,7 @@ struct PersonDetailView: View {
     
     private func dismissCadenceRecommendation() {
         let until = Calendar.current.date(byAdding: .day, value: 14, to: .now) ?? .now
-        AppSettings.dismissSmartCadence(personKey: String(describing: person.persistentModelID), until: until)
+        AppSettings.dismissSmartCadence(personKey: person.stableID.uuidString, until: until)
         haptics.impactLight()
     }
 
@@ -1194,13 +1202,13 @@ struct PersonDetailView: View {
             sortOrder: nextCareerSortOrder()
         )
         modelContext.insert(role)
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
     
     private func ensureFamilyGraphReady() {
         FamilyGraphV2Migrator.migrate(person: person, context: modelContext)
         _ = FamilyGraphV2Service.ensureAnchorNode(for: person, context: modelContext)
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
     
     private func addFamilyConnection(
@@ -1269,7 +1277,7 @@ struct PersonDetailView: View {
             )
         }
         
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
     
     private func updateCareerRole(
@@ -1291,7 +1299,7 @@ struct PersonDetailView: View {
         role.startYear = startYear
         role.endYear = isCurrent ? nil : endYear
         role.isCurrent = isCurrent
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
 
     private func updateFamilyNode(
@@ -1306,12 +1314,12 @@ struct PersonDetailView: View {
         let trimmedRelation = relation.trimmingCharacters(in: .whitespacesAndNewlines)
         node.roleHint = trimmedRelation.isEmpty ? nil : trimmedRelation
         node.age = age
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
     
     private func removeCareerRole(_ role: CareerRole) {
         modelContext.delete(role)
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
     
     private func removeFamilyRelationship(_ edge: FamilyEdgeV2) {
@@ -1320,7 +1328,7 @@ struct PersonDetailView: View {
             for: person,
             context: modelContext
         )
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
 
     private func removeFamilyNode(_ node: FamilyNodeV2) {
@@ -1334,7 +1342,7 @@ struct PersonDetailView: View {
 
         modelContext.delete(node)
         FamilyGraphV2Service.pruneOrphans(context: modelContext)
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
     
     private func moveCareerRole(_ role: CareerRole, by offset: Int) {
@@ -1351,7 +1359,7 @@ struct PersonDetailView: View {
         let oldOrder = currentRole.sortOrder
         currentRole.sortOrder = targetRole.sortOrder
         targetRole.sortOrder = oldOrder
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
     }
     
     private func ensureCareerSortOrders() {
@@ -1361,7 +1369,7 @@ struct PersonDetailView: View {
             hasChanges = true
         }
         if hasChanges {
-            try? modelContext.save()
+            do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
         }
     }
     
@@ -1377,7 +1385,8 @@ struct PersonDetailView: View {
         }
         FamilyGraphV2Service.pruneOrphans(context: modelContext)
         modelContext.delete(person)
-        try? modelContext.save()
+        do { try modelContext.save() } catch { print("[Dunbar] Save failed: \(error)") }
+        WidgetSnapshotStore.write(WidgetSnapshotStore.buildSnapshot(people: allPeople))
     }
 }
 
@@ -3068,6 +3077,7 @@ struct EditPersonView: View {
                         person.reminderMinute = components.minute ?? person.reminderMinute
                         Task {
                             await nudgeScheduler.schedule(for: person)
+                            WidgetSnapshotStore.write(WidgetSnapshotStore.buildSnapshot(people: people))
                         }
                         dismiss()
                     }

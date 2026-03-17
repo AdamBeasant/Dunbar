@@ -66,8 +66,6 @@ struct ContentView: View {
             }
         }
         .tint(DunbarTheme.ringColor(for: .core))
-        .toolbarBackground(.clear, for: .tabBar)
-        .toolbarBackground(.visible, for: .tabBar)
         .preferredColorScheme(nil)
         .sheet(isPresented: $showingAddSheet) {
             AddPersonView()

@@ -26,7 +26,6 @@ struct SettingsView: View {
     @AppStorage(AppSettings.snoozePreset1DaysKey) private var snoozePreset1Days = 1
     @AppStorage(AppSettings.snoozePreset2DaysKey) private var snoozePreset2Days = 3
     @AppStorage(AppSettings.snoozePreset3DaysKey) private var snoozePreset3Days = 7
-    @AppStorage(AppSettings.ringMotionIntensityKey) private var ringMotionIntensityRaw = RingMotionIntensity.low.rawValue
 
     @State private var simulatorCadence: Cadence = .weekly
     @State private var simulatorNeverContacted = true
@@ -43,7 +42,6 @@ struct SettingsView: View {
                 reminderCard
                 reminderSimulatorCard
                 notificationControlsCard
-                motionAndHapticsCard
                 quietHoursCard
                 weeklyGoalCard
                 actionsCard
@@ -196,23 +194,6 @@ struct SettingsView: View {
         }
     }
 
-    private var motionAndHapticsCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("MOTION")
-                .font(DunbarTheme.eyebrowFont)
-                .foregroundStyle(DunbarTheme.textTertiary)
-                .tracking(0.8)
-
-            Picker("Circle motion", selection: ringMotionIntensityBinding) {
-                ForEach(RingMotionIntensity.allCases) { intensity in
-                    Text(intensity.label).tag(intensity)
-                }
-            }
-            .pickerStyle(.segmented)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .dunbarCard()
-    }
 
     private var quietHoursCard: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -345,12 +326,6 @@ struct SettingsView: View {
         )
     }
 
-    private var ringMotionIntensityBinding: Binding<RingMotionIntensity> {
-        Binding(
-            get: { RingMotionIntensity(rawValue: ringMotionIntensityRaw) ?? .low },
-            set: { ringMotionIntensityRaw = $0.rawValue }
-        )
-    }
 
     private var simulatorPreviewDates: [Date] {
         let lastContact: Date

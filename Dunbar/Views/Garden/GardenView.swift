@@ -613,16 +613,9 @@ private struct RingMapView: View {
                             .strokeBorder(DunbarTheme.ringColor(for: .core).opacity(0.35), lineWidth: 1)
                     )
 
-                VStack(spacing: 0) {
-                    Text("\(people.count)")
-                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                        .foregroundStyle(DunbarTheme.ringColor(for: .core))
-
-                    Text("PEOPLE")
-                        .font(.system(size: 7, weight: .semibold))
-                        .tracking(0.8)
-                        .foregroundStyle(DunbarTheme.textTertiary)
-                }
+                Text("\(people.count)")
+                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .foregroundStyle(DunbarTheme.ringColor(for: .core))
             }
         }
         .frame(width: size, height: size)

@@ -8,6 +8,7 @@ struct ContentView: View {
     @State private var navigationPath = NavigationPath()
     @State private var showingAddSheet = false
     @State private var showingSettingsSheet = false
+    @State private var showSplash = true
     @Query(filter: #Predicate<Person> { person in
         person.isArchived == false
     }) private var people: [Person]
@@ -27,6 +28,13 @@ struct ContentView: View {
 
             if appLockManager.isLocked {
                 lockOverlay
+            }
+
+            if showSplash {
+                SplashView {
+                    showSplash = false
+                }
+                .zIndex(100)
             }
         }
         .onOpenURL { url in

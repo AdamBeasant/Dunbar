@@ -59,19 +59,19 @@ enum DunbarRing: String, Codable, CaseIterable, Identifiable {
     
     var label: String {
         switch self {
-        case .core: return "Core"
+        case .core: return "Inner"
         case .close: return "Close"
-        case .active: return "Active"
-        case .meaningful: return "Meaningful"
+        case .active: return "Wider"
+        case .meaningful: return "Outer"
         }
     }
-    
+
     var shortLabel: String {
         switch self {
-        case .core: return "Core 5"
+        case .core: return "Inner 5"
         case .close: return "Close 15"
-        case .active: return "Active 50"
-        case .meaningful: return "150 Circle"
+        case .active: return "Wider 50"
+        case .meaningful: return "Outer 150"
         }
     }
     

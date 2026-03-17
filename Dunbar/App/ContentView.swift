@@ -39,31 +39,55 @@ struct ContentView: View {
 
     private var tabShell: some View {
         TabView(selection: tabSelection) {
-            Tab("Circles", systemImage: "smallcircle.circle", value: AppTab.rings) {
-                NavigationStack(path: $navigationPath) {
-                    GardenView(
-                        navigationPath: $navigationPath,
-                        onSettingsTap: { showingSettingsSheet = true }
-                    )
+            NavigationStack(path: $navigationPath) {
+                GardenView(
+                    navigationPath: $navigationPath,
+                    onSettingsTap: { showingSettingsSheet = true }
+                )
+            }
+            .tabItem {
+                VStack {
+                    Image(systemName: selectedTab == .rings ? "smallcircle.filled.circle.fill" : "smallcircle.circle")
+                        .environment(\.symbolVariants, .none)
+                    Text("Circles")
                 }
             }
+            .tag(AppTab.rings)
 
-            Tab("Nudges", systemImage: "bell", value: AppTab.nudges) {
-                NavigationStack {
-                    NudgeListView(onSettingsTap: { showingSettingsSheet = true })
+            NavigationStack {
+                NudgeListView(onSettingsTap: { showingSettingsSheet = true })
+            }
+            .tabItem {
+                VStack {
+                    Image(systemName: selectedTab == .nudges ? "bell.fill" : "bell")
+                        .environment(\.symbolVariants, .none)
+                    Text("Nudges")
                 }
             }
             .badge(overdueCount)
+            .tag(AppTab.nudges)
 
-            Tab("Rhythm", systemImage: "chart.bar", value: AppTab.history) {
-                NavigationStack {
-                    HistoryView(onSettingsTap: { showingSettingsSheet = true })
+            NavigationStack {
+                HistoryView(onSettingsTap: { showingSettingsSheet = true })
+            }
+            .tabItem {
+                VStack {
+                    Image(systemName: selectedTab == .history ? "chart.bar.fill" : "chart.bar")
+                        .environment(\.symbolVariants, .none)
+                    Text("Rhythm")
                 }
             }
+            .tag(AppTab.history)
 
-            Tab("Add", systemImage: "person.badge.plus", value: AppTab.add) {
-                Color.clear
-            }
+            Color.clear
+                .tabItem {
+                    VStack {
+                        Image(systemName: selectedTab == .add ? "person.fill.badge.plus" : "person.badge.plus")
+                            .environment(\.symbolVariants, .none)
+                        Text("Add")
+                    }
+                }
+                .tag(AppTab.add)
         }
         .tint(DunbarTheme.ringColor(for: .core))
         .preferredColorScheme(nil)

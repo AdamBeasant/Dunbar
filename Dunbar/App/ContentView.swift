@@ -5,7 +5,7 @@ import UIKit
 struct ContentView: View {
     @Environment(AppLockManager.self) private var appLockManager
 
-    @State private var selectedTab: Tab = .rings
+    @State private var selectedTab: AppTab = .rings
     @State private var navigationPath = NavigationPath()
     @State private var showingAddSheet = false
     @State private var showingSettingsSheet = false
@@ -13,7 +13,7 @@ struct ContentView: View {
         person.isArchived == false
     }) private var people: [Person]
 
-    enum Tab: Hashable {
+    enum AppTab: Hashable {
         case rings, nudges, history, add
     }
 
@@ -58,7 +58,7 @@ struct ContentView: View {
 
     private var tabShell: some View {
         TabView(selection: tabSelection) {
-            Tab("Circles", systemImage: "smallcircle.circle", value: Tab.rings) {
+            Tab("Circles", systemImage: "smallcircle.circle", value: AppTab.rings) {
                 NavigationStack(path: $navigationPath) {
                     GardenView(
                         navigationPath: $navigationPath,
@@ -67,20 +67,20 @@ struct ContentView: View {
                 }
             }
 
-            Tab("Nudges", systemImage: "bell", value: Tab.nudges) {
+            Tab("Nudges", systemImage: "bell", value: AppTab.nudges) {
                 NavigationStack {
                     NudgeListView(onSettingsTap: { showingSettingsSheet = true })
                 }
             }
             .badge(overdueCount)
 
-            Tab("Rhythm", systemImage: "chart.bar", value: Tab.history) {
+            Tab("Rhythm", systemImage: "chart.bar", value: AppTab.history) {
                 NavigationStack {
                     HistoryView(onSettingsTap: { showingSettingsSheet = true })
                 }
             }
 
-            Tab("Add", systemImage: "person.badge.plus", value: Tab.add) {
+            Tab("Add", systemImage: "person.badge.plus", value: AppTab.add) {
                 Color.clear
             }
         }
@@ -148,7 +148,7 @@ struct ContentView: View {
     }
 
     /// Intercept the .add tab — open the sheet and snap back to the previous tab
-    private var tabSelection: Binding<Tab> {
+    private var tabSelection: Binding<AppTab> {
         Binding(
             get: { selectedTab },
             set: { newTab in

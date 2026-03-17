@@ -1,6 +1,5 @@
 import SwiftUI
 import SwiftData
-import UIKit
 
 struct ContentView: View {
     @Environment(AppLockManager.self) private var appLockManager
@@ -17,24 +16,6 @@ struct ContentView: View {
         case rings, nudges, history, add
     }
 
-    init() {
-        let appearance = UITabBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-        appearance.backgroundColor = UIColor(DunbarTheme.surface).withAlphaComponent(0.86)
-        appearance.shadowColor = UIColor(DunbarTheme.border)
-
-        let selectedColor = UIColor(DunbarTheme.ringColor(for: .core))
-        let normalColor = UIColor(DunbarTheme.textTertiary)
-
-        appearance.stackedLayoutAppearance.selected.iconColor = selectedColor
-        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: selectedColor]
-        appearance.stackedLayoutAppearance.normal.iconColor = normalColor
-        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: normalColor]
-
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
-    }
 
     private var overdueCount: Int {
         people.filter { $0.healthState == .withering }.count

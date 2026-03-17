@@ -180,7 +180,9 @@ struct AddPersonView: View {
                                     }
                                 }
                             }
+                            .padding(.horizontal, 20)
                         }
+                        .padding(.horizontal, -20)
                     }
                     
                     fieldSection("REMINDER TIME") {

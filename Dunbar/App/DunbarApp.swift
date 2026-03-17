@@ -1,0 +1,113 @@
+import SwiftUI
+import SwiftData
+
+@main
+struct DunbarApp: App {
+    
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            Person.self,
+            CheckIn.self,
+            CareerRole.self,
+            FamilyMember.self,
+            FamilyPerson.self,
+            FamilyRelationship.self,
+            FamilyGraphV2.self,
+            FamilyNodeV2.self,
+            FamilyEdgeV2.self,
+        ])
+        let storeURL = URL.applicationSupportDirectory.appending(path: "Dunbar.store")
+        let diskConfiguration = ModelConfiguration(url: storeURL)
+        
+        func wipeKnownStoreFiles() {
+            let fileManager = FileManager.default
+            let appSupportURL = URL.applicationSupportDirectory
+            
+            try? fileManager.createDirectory(
+                at: appSupportURL,
+                withIntermediateDirectories: true
+            )
+            
+            // Clean both old and new local store names.
+            for baseName in ["default.store", "Dunbar.store"] {
+                let baseURL = appSupportURL.appending(path: baseName)
+                for suffix in ["", "-wal", "-shm"] {
+                    try? fileManager.removeItem(
+                        at: URL(fileURLWithPath: baseURL.path() + suffix)
+                    )
+                }
+            }
+        }
+        
+        do {
+            return try ModelContainer(
+                for: schema,
+                configurations: diskConfiguration
+            )
+        } catch {
+            print("ModelContainer failed: \(error). Deleting store and retrying...")
+            wipeKnownStoreFiles()
+            
+            do {
+                return try ModelContainer(
+                    for: schema,
+                    configurations: diskConfiguration
+                )
+            } catch {
+                print("Disk ModelContainer failed again: \(error). Falling back to in-memory store.")
+                
+                do {
+                    return try ModelContainer(
+                        for: schema,
+                        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+                    )
+                } catch {
+                    fatalError("Could not create ModelContainer: \(error)")
+                }
+            }
+        }
+    }()
+    
+    @State private var nudgeScheduler = NudgeScheduler()
+    @State private var appLockManager = AppLockManager()
+    @State private var hapticFeedback = HapticFeedbackService()
+    @Environment(\.scenePhase) private var scenePhase
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environment(nudgeScheduler)
+                .environment(appLockManager)
+                .environment(hapticFeedback)
+                .task {
+                    // Request notification permission on first launch
+                    await nudgeScheduler.requestPermissionIfNeeded()
+                    appLockManager.refreshBiometricAvailability()
+                    FamilyGraphMigrator.migrateIfNeeded(context: sharedModelContainer.mainContext)
+                    FamilyGraphV2Migrator.migrateIfNeeded(context: sharedModelContainer.mainContext)
+                }
+        }
+        .modelContainer(sharedModelContainer)
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                Task {
+                    if appLockManager.isLocked {
+                        await appLockManager.unlockIfNeeded()
+                    }
+                    let context = sharedModelContainer.mainContext
+                    let descriptor = FetchDescriptor<Person>(
+                        predicate: #Predicate { !$0.isArchived }
+                    )
+                    if let people = try? context.fetch(descriptor) {
+                        await nudgeScheduler.rescheduleAll(people: people)
+                        WidgetSnapshotStore.write(
+                            WidgetSnapshotStore.buildSnapshot(people: people)
+                        )
+                    }
+                }
+            } else if newPhase == .inactive || newPhase == .background {
+                appLockManager.lockIfNeeded()
+            }
+        }
+    }
+}

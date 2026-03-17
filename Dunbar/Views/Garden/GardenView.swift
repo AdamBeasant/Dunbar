@@ -100,7 +100,7 @@ struct GardenView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: onSettingsTap) {
-                    Image(systemName: "ellipsis")
+                    Image(systemName: "gearshape")
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .foregroundStyle(DunbarTheme.ringColor(for: .core))
                 }

@@ -5,7 +5,6 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Environment(NudgeScheduler.self) private var nudgeScheduler
-    @Environment(AppLockManager.self) private var appLockManager
 
     let showsCloseButton: Bool
 
@@ -29,7 +28,6 @@ struct SettingsView: View {
     @AppStorage(AppSettings.snoozePreset3DaysKey) private var snoozePreset3Days = 7
     @AppStorage(AppSettings.ringMotionIntensityKey) private var ringMotionIntensityRaw = RingMotionIntensity.low.rawValue
     @AppStorage(AppSettings.hapticsEnabledKey) private var hapticsEnabled = true
-    @AppStorage(AppSettings.faceIDEnabledKey) private var faceIDEnabled = false
 
     @State private var simulatorCadence: Cadence = .weekly
     @State private var simulatorNeverContacted = true
@@ -47,7 +45,6 @@ struct SettingsView: View {
                 reminderSimulatorCard
                 notificationControlsCard
                 motionAndHapticsCard
-                privacyCard
                 quietHoursCard
                 weeklyGoalCard
                 actionsCard
@@ -77,18 +74,7 @@ struct SettingsView: View {
         .onChange(of: quietEndMinute) { _, _ in rescheduleAll() }
         .onChange(of: notificationSoundEnabled) { _, _ in rescheduleAll() }
         .onChange(of: notificationBadgeEnabled) { _, _ in rescheduleAll() }
-        .onChange(of: faceIDEnabled) { _, enabled in
-            AppSettings.faceIDEnabled = enabled
-            if enabled {
-                appLockManager.refreshBiometricAvailability()
-                appLockManager.lockIfNeeded()
-                Task { await appLockManager.unlockIfNeeded(force: true) }
-            } else {
-                appLockManager.isLocked = false
-            }
-        }
         .onAppear {
-            appLockManager.refreshBiometricAvailability()
             simulatorCadence = .weekly
             simulatorNeverContacted = true
             simulatorDaysSinceContact = 0
@@ -227,33 +213,6 @@ struct SettingsView: View {
                 }
             }
             .pickerStyle(.segmented)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .dunbarCard()
-    }
-
-    private var privacyCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("PRIVACY")
-                .font(DunbarTheme.eyebrowFont)
-                .foregroundStyle(DunbarTheme.textTertiary)
-                .tracking(0.8)
-
-            Toggle("Lock with Face ID", isOn: $faceIDEnabled)
-                .tint(DunbarTheme.ringColor(for: .core))
-
-            Text(appLockManager.availabilityText)
-                .font(.system(size: 13, weight: .medium, design: .rounded))
-                .foregroundStyle(DunbarTheme.textSecondary)
-
-            Button("Test unlock") {
-                Task {
-                    await appLockManager.unlockIfNeeded(force: true)
-                }
-            }
-            .frame(maxWidth: .infinity)
-            .dunbarSecondaryButton()
-            .disabled(!appLockManager.biometricAvailable)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .dunbarCard()

@@ -9,8 +9,6 @@ struct ContentView: View {
     @State private var navigationPath = NavigationPath()
     @State private var showingAddSheet = false
     @State private var showingSettingsSheet = false
-    @AppStorage(AppSettings.appearanceModeKey) private var appearanceModeRaw = AppAppearance.system.rawValue
-
     @Query(filter: #Predicate<Person> { person in
         person.isArchived == false
     }) private var people: [Person]
@@ -98,7 +96,7 @@ struct ContentView: View {
         .tint(DunbarTheme.ringColor(for: .core))
         .toolbarBackground(.clear, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
-        .preferredColorScheme(preferredColorScheme)
+        .preferredColorScheme(nil)
         .sheet(isPresented: $showingAddSheet) {
             AddPersonView()
         }
@@ -172,16 +170,6 @@ struct ContentView: View {
         )
     }
 
-    private var preferredColorScheme: ColorScheme? {
-        switch AppAppearance(rawValue: appearanceModeRaw) ?? .system {
-        case .system:
-            return nil
-        case .light:
-            return .light
-        case .dark:
-            return .dark
-        }
-    }
 }
 
 #Preview {

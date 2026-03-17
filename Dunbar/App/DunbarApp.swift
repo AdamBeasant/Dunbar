@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 @main
 struct DunbarApp: App {
@@ -90,6 +91,7 @@ struct DunbarApp: App {
         .modelContainer(sharedModelContainer)
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
+                UNUserNotificationCenter.current().setBadgeCount(0)
                 Task {
                     if appLockManager.isLocked {
                         await appLockManager.unlockIfNeeded()

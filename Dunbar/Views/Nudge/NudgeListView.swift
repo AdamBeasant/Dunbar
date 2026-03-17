@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct NudgeListView: View {
     @Environment(\.modelContext) private var modelContext
@@ -145,6 +146,7 @@ struct NudgeListView: View {
             }
         }
         .onAppear {
+            UNUserNotificationCenter.current().setBadgeCount(0)
             AppSettings.clearExpiredSmartCadenceDismissals()
         }
     }

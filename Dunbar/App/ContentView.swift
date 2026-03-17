@@ -65,7 +65,7 @@ struct ContentView: View {
                 )
             }
             .tabItem {
-                Label("Circles", systemImage: "smallcircle.filled.circle.fill")
+                Label("Circles", systemImage: selectedTab == .rings ? "smallcircle.filled.circle.fill" : "smallcircle.circle")
             }
             .tag(Tab.rings)
 
@@ -73,7 +73,7 @@ struct ContentView: View {
                 NudgeListView(onSettingsTap: { showingSettingsSheet = true })
             }
             .tabItem {
-                Label("Nudges", systemImage: "bell.fill")
+                Label("Nudges", systemImage: selectedTab == .nudges ? "bell.fill" : "bell")
             }
             .badge(overdueCount)
             .tag(Tab.nudges)
@@ -82,14 +82,14 @@ struct ContentView: View {
                 HistoryView(onSettingsTap: { showingSettingsSheet = true })
             }
             .tabItem {
-                Label("Rhythm", systemImage: "chart.bar.fill")
+                Label("Rhythm", systemImage: selectedTab == .history ? "chart.bar.fill" : "chart.bar")
             }
             .tag(Tab.history)
 
             // + tab — never actually shown, intercepted to open sheet
             Color.clear
                 .tabItem {
-                    Label("Add", systemImage: "plus")
+                    Label("Add", systemImage: selectedTab == .add ? "person.fill.badge.plus" : "person.badge.plus")
                 }
                 .tag(Tab.add)
         }

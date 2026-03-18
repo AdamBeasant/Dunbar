@@ -9,6 +9,8 @@ struct OnboardingView: View {
     @State private var notificationsGranted = false
     @FocusState private var nameFieldFocused: Bool
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     // Animation states
     @State private var ringScales: [CGFloat] = [0, 0, 0, 0]
     @State private var ringOpacities: [Double] = [0, 0, 0, 0]
@@ -51,6 +53,8 @@ struct OnboardingView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeInOut(duration: 0.3), value: currentPage)
+                .accessibilityLabel("Onboarding step \(currentPage + 1) of \(totalPages)")
+                .accessibilityHint("Swipe left or right to navigate between pages")
 
                 // Page dots
                 pageIndicator
@@ -412,11 +416,13 @@ struct OnboardingView: View {
             concentricRings(animated: false)
                 .scaleEffect(pulseScale)
             .onAppear {
-                withAnimation(
-                    .easeInOut(duration: 2.0)
-                    .repeatForever(autoreverses: true)
-                ) {
-                    pulseScale = 1.06
+                if !reduceMotion {
+                    withAnimation(
+                        .easeInOut(duration: 2.0)
+                        .repeatForever(autoreverses: true)
+                    ) {
+                        pulseScale = 1.06
+                    }
                 }
             }
             .padding(.bottom, 48)
@@ -548,6 +554,13 @@ struct OnboardingView: View {
     }
 
     private func animateRingsIn() {
+        if reduceMotion {
+            ringScales = rings.map { _ in CGFloat(1) }
+            ringOpacities = rings.map { _ in 1.0 }
+            contentOpacity = 1
+            return
+        }
+
         for index in rings.indices {
             let delay = Double(index) * 0.15
             withAnimation(.spring(response: 0.6, dampingFraction: 0.7).delay(delay)) {

@@ -79,8 +79,10 @@ struct NudgeListView: View {
                                 .listRowBackground(Color.clear)
                                 .listRowSeparator(.hidden)
 
-                        case .person(let person, _):
+                        case .person(let person, let group):
                             inboxPersonRow(person)
+                                .accessibilityElement(children: .combine)
+                                .accessibilityLabel("\(person.name), \(group == .overdue ? "overdue" : "due soon")")
                                 .listRowInsets(EdgeInsets(top: 4, leading: 20, bottom: 4, trailing: 20))
                                 .listRowBackground(Color.clear)
                                 .listRowSeparator(.hidden)
@@ -90,6 +92,7 @@ struct NudgeListView: View {
                                         selectedNotePerson = person
                                     }
                                     .tint(DunbarTheme.green)
+                                    .accessibilityLabel("Mark as done")
                                 }
                                 .swipeActions(edge: .leading, allowsFullSwipe: false) {
                                     Button("Snooze") {
@@ -97,6 +100,7 @@ struct NudgeListView: View {
                                         selectedSnoozePerson = person
                                     }
                                     .tint(DunbarTheme.ringColor(for: .core))
+                                    .accessibilityLabel("Snooze")
                                 }
                         }
                     }
@@ -164,6 +168,9 @@ struct NudgeListView: View {
 
             Spacer()
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(title)
+        .accessibilityAddTraits(.isHeader)
     }
 
     private func inboxPersonRow(_ person: Person) -> some View {

@@ -238,6 +238,7 @@ struct GardenView: View {
                     )
             }
             .buttonStyle(.plain)
+            .accessibilityHint("Shows suggestions for moving contacts between circles")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -296,6 +297,12 @@ struct GardenView: View {
     private func ringFilterChip(filter: RingFilter, badge: Int?) -> some View {
         let isSelected = selectedFilter == filter
         let tint: Color = filter.ring.map { DunbarTheme.ringColor(for: $0) } ?? DunbarTheme.ringColor(for: .core)
+        let filterCount: Int = {
+            if let ring = filter.ring {
+                return people.filter { $0.ring == ring }.count
+            }
+            return people.count
+        }()
 
         return Button {
             withAnimation(.easeInOut(duration: 0.2)) {
@@ -330,6 +337,8 @@ struct GardenView: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("\(filter.title) filter, \(filterCount) contacts")
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     private var peopleSection: some View {
@@ -562,13 +571,15 @@ private struct RingMapView: View {
     let onSelectRing: (DunbarRing?) -> Void
     let onPersonTap: (Person) -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     private let size: CGFloat = 308
     private let radii: [CGFloat] = [52, 86, 120, 154]
 
     var body: some View {
         let center = size / 2
 
-        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: false)) { timeline in
+        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: reduceMotion)) { timeline in
             let elapsed = timeline.date.timeIntervalSinceReferenceDate
 
             ZStack {
@@ -619,6 +630,8 @@ private struct RingMapView: View {
             }
         }
         .frame(width: size, height: size)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Circle map showing \(people.count) contacts")
         .frame(maxWidth: .infinity)
         .padding(.top, 2)
         .padding(.bottom, 2)
@@ -668,6 +681,7 @@ private struct RingMapDot: View {
     let ringRotationDegrees: Double
     let action: () -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var pulse = false
     @State private var showingName = false
 
@@ -697,7 +711,7 @@ private struct RingMapDot: View {
                         .frame(width: 17, height: 17)
                         .scaleEffect(pulse ? 1.35 : 1.0)
                         .opacity(pulse ? 0 : 1)
-                        .animation(.easeOut(duration: 1.8).repeatForever(autoreverses: false), value: pulse)
+                        .animation(reduceMotion ? .none : .easeOut(duration: 1.8).repeatForever(autoreverses: false), value: pulse)
                 }
             }
             
@@ -724,6 +738,9 @@ private struct RingMapDot: View {
                     .zIndex(200)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(person.name), \(person.ring.label) circle, \(person.healthState.label)")
+        .accessibilityHint("Double tap to view contact. Long press to show name.")
         .zIndex(showingName ? 100 : 1)
         .contentShape(Rectangle())
         .onTapGesture {
@@ -740,7 +757,7 @@ private struct RingMapDot: View {
             perform: {}
         )
         .onAppear {
-            if person.healthState == .withering {
+            if person.healthState == .withering && !reduceMotion {
                 pulse = true
             }
         }

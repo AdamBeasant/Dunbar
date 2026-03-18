@@ -3,6 +3,7 @@ import SwiftUI
 struct SplashView: View {
     let onFinished: () -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var ringScales: [CGFloat] = [0, 0, 0, 0]
     @State private var ringOpacities: [Double] = [0, 0, 0, 0]
     @State private var textOpacity: Double = 0
@@ -51,12 +52,26 @@ struct SplashView: View {
             }
         }
         .opacity(dismissOpacity)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Dunbar. Loading.")
         .onAppear {
             animateIn()
         }
     }
 
     private func animateIn() {
+        if reduceMotion {
+            ringScales = rings.map { _ in CGFloat(1) }
+            ringOpacities = rings.map { _ in 1.0 }
+            textOpacity = 1
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                dismissOpacity = 0
+                onFinished()
+            }
+            return
+        }
+
         // Stagger ring animations from inner to outer
         for index in rings.indices {
             let delay = Double(index) * 0.15

@@ -11,7 +11,10 @@ struct PlantView: View {
     let healthState: HealthState
     var size: CGFloat = 48
     var isAnimated: Bool = true
-    
+    var isDecorative: Bool = false
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     /// Thriving plants gently sway
     @State private var swaying = false
     
@@ -27,23 +30,25 @@ struct PlantView: View {
         }
         .frame(width: size, height: size)
         .rotationEffect(
-            isAnimated && healthState == .thriving && swaying
+            isAnimated && !reduceMotion && healthState == .thriving && swaying
                 ? .degrees(2) : .degrees(0)
         )
         .animation(
-            isAnimated && healthState == .thriving
+            isAnimated && !reduceMotion && healthState == .thriving
                 ? .easeInOut(duration: 3).repeatForever(autoreverses: true)
                 : .none,
             value: swaying
         )
         .onAppear {
-            if isAnimated && healthState == .thriving {
+            if isAnimated && !reduceMotion && healthState == .thriving {
                 swaying = true
             }
         }
         .onChange(of: healthState) { _, newState in
-            swaying = isAnimated && (newState == .thriving)
+            swaying = isAnimated && !reduceMotion && (newState == .thriving)
         }
+        .accessibilityLabel("\(plantType.label) plant, \(healthState.label)")
+        .accessibilityHidden(isDecorative)
     }
 }
 

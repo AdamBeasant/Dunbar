@@ -36,6 +36,7 @@ enum AppSettings {
     static let hasCompletedOnboardingKey = "settings.onboarding.completed"
     static let userNameKey = "settings.onboarding.userName"
     static let hasCompletedWalkthroughKey = "settings.walkthrough.completed"
+    static let hasRequestedReviewKey = "settings.review.requested"
 
     static var defaultReminderHour: Int {
         get { integer(forKey: reminderDefaultHourKey, defaultValue: 10) }
@@ -145,6 +146,11 @@ enum AppSettings {
     static var hasCompletedWalkthrough: Bool {
         get { bool(forKey: hasCompletedWalkthroughKey, defaultValue: false) }
         set { UserDefaults.standard.set(newValue, forKey: hasCompletedWalkthroughKey) }
+    }
+
+    static var hasRequestedReview: Bool {
+        get { bool(forKey: hasRequestedReviewKey, defaultValue: false) }
+        set { UserDefaults.standard.set(newValue, forKey: hasRequestedReviewKey) }
     }
 
     static var snoozePresets: [Int] {

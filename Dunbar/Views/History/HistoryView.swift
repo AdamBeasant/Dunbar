@@ -137,6 +137,8 @@ struct HistoryView: View {
             .font(.system(size: 10, weight: .medium))
             .foregroundStyle(DunbarTheme.textTertiary)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Check-in momentum chart, \(weeklyCounts.last ?? 0) check-ins this week, \(weeklyCounts.reduce(0, +)) total over 12 weeks")
         .dunbarCard()
     }
 
@@ -228,6 +230,8 @@ struct HistoryView: View {
                 }
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Circle health score \(snapshot.totalScore) out of 100")
         .dunbarCard()
     }
 
@@ -258,6 +262,8 @@ struct HistoryView: View {
                 )
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Contact states: \(snapshot.thrivingCount) thriving, \(snapshot.dueSoonCount) due soon, \(snapshot.overdueCount) overdue")
         .dunbarCard()
     }
 

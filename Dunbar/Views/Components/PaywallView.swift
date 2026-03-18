@@ -17,6 +17,7 @@ struct PaywallView: View {
                         .font(.system(size: 28))
                         .foregroundStyle(DunbarTheme.textTertiary)
                 }
+                .accessibilityLabel("Close")
             }
             .padding(.horizontal, 20)
             .padding(.top, 16)
@@ -39,6 +40,7 @@ struct PaywallView: View {
                             .strokeBorder(DunbarTheme.ringColor(for: .core).opacity(0.4), lineWidth: 1)
                     )
             }
+            .accessibilityHidden(true)
             .padding(.bottom, 28)
 
             // Headline
@@ -73,12 +75,10 @@ struct PaywallView: View {
                         .progressViewStyle(.circular)
                         .tint(.white)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
                 } else {
                     Text(purchaseButtonText)
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
                 }
             }
             .dunbarPrimaryButton()
@@ -128,5 +128,6 @@ struct PaywallView: View {
                 .font(.system(size: 15, weight: .medium, design: .rounded))
                 .foregroundStyle(DunbarTheme.textPrimary)
         }
+        .accessibilityElement(children: .combine)
     }
 }

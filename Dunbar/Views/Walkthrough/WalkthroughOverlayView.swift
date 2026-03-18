@@ -3,6 +3,7 @@ import SwiftData
 
 struct WalkthroughOverlayView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Binding var selectedTab: ContentView.AppTab
     @Binding var navigationPath: NavigationPath
     let onComplete: (_ openAddSheet: Bool) -> Void
@@ -96,7 +97,7 @@ struct WalkthroughOverlayView: View {
                 findDummyPerson()
             }
             selectedTab = steps[currentStep].tab
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.85)) {
+            withAnimation(reduceMotion ? .easeInOut(duration: 0.15) : .spring(response: 0.5, dampingFraction: 0.85)) {
                 sheetVisible = true
             }
         }
@@ -183,6 +184,7 @@ struct WalkthroughOverlayView: View {
             .fill(DunbarTheme.surface)
             .shadow(color: .black.opacity(0.15), radius: 20, y: -8)
         )
+        .accessibilityElement(children: .contain)
     }
 
     private var stepDots: some View {
@@ -193,6 +195,7 @@ struct WalkthroughOverlayView: View {
                     .frame(width: i == currentStep ? 20 : 8, height: 6)
             }
         }
+        .accessibilityHidden(true)
     }
 
     // MARK: - Actions
@@ -204,7 +207,7 @@ struct WalkthroughOverlayView: View {
             let nextStep = currentStep + 1
             let step = steps[nextStep]
 
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+            withAnimation(reduceMotion ? .easeInOut(duration: 0.15) : .spring(response: 0.4, dampingFraction: 0.85)) {
                 currentStep = nextStep
             }
 
@@ -252,7 +255,7 @@ struct WalkthroughOverlayView: View {
             navigationPath = NavigationPath()
         }
 
-        withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
+        withAnimation(reduceMotion ? .easeInOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.9)) {
             sheetVisible = false
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {

@@ -17,6 +17,8 @@ struct StatusBadge: View {
         .padding(.vertical, 5)
         .background(DunbarTheme.backgroundColor(for: state))
         .clipShape(Capsule())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(state.label)
     }
 }
 

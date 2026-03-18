@@ -1,10 +1,12 @@
 import SwiftUI
 import SwiftData
 import PhotosUI
+import StoreKit
 
 struct AddPersonView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.requestReview) private var requestReview
     @Environment(NudgeScheduler.self) private var nudgeScheduler
     
     @Query(filter: #Predicate<Person> { !$0.isArchived })
@@ -617,7 +619,16 @@ struct AddPersonView: View {
             await nudgeScheduler.schedule(for: person)
             WidgetSnapshotStore.write(WidgetSnapshotStore.buildSnapshot(people: people + [person]))
         }
-        
+
+        // Request App Store review after adding the 3rd real contact
+        let realContactCount = people.filter { !$0.isDummyData }.count + 1 // +1 for the one just added
+        if realContactCount >= 3 && !AppSettings.hasRequestedReview {
+            AppSettings.hasRequestedReview = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                requestReview()
+            }
+        }
+
         dismiss()
     }
     

@@ -46,8 +46,13 @@ struct PersonCard: View {
                         )
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Mark as done")
+                .accessibilityHint("Double tap to log a check-in")
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(person.name), \(person.cadence.label), \(person.healthState.label). Last contacted \(daysAgoText)")
+        .accessibilityHint("Double tap to view details")
     }
     
     private var cardContent: some View {

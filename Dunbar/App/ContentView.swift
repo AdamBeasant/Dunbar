@@ -11,6 +11,8 @@ struct ContentView: View {
     @State private var showingSettingsSheet = false
     @State private var showingPaywall = false
     @State private var showSplash = true
+    @State private var showOnboarding = !AppSettings.hasCompletedOnboarding
+    @State private var showWalkthrough = AppSettings.hasCompletedOnboarding && !AppSettings.hasCompletedWalkthrough
     @Query(filter: #Predicate<Person> { person in
         person.isArchived == false
     }) private var people: [Person]
@@ -32,6 +34,39 @@ struct ContentView: View {
                 lockOverlay
             }
 
+            if showWalkthrough {
+                WalkthroughOverlayView(
+                    selectedTab: $selectedTab,
+                    navigationPath: $navigationPath,
+                    onComplete: { openAdd in
+                        withAnimation(.easeOut(duration: 0.4)) {
+                            showWalkthrough = false
+                        }
+                        if openAdd {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                showingAddSheet = true
+                            }
+                        }
+                    }
+                )
+                .zIndex(40)
+            }
+
+            if showOnboarding {
+                OnboardingView {
+                    withAnimation(.easeOut(duration: 0.4)) {
+                        showOnboarding = false
+                    }
+                    // Trigger walkthrough after onboarding dismisses
+                    if !AppSettings.hasCompletedWalkthrough {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                            showWalkthrough = true
+                        }
+                    }
+                }
+                .zIndex(50)
+            }
+
             if showSplash {
                 SplashView {
                     showSplash = false
@@ -43,6 +78,15 @@ struct ContentView: View {
             guard url.scheme?.lowercased() == "dunbar" else { return }
             if url.host?.lowercased() == "inbox" {
                 selectedTab = .nudges
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .replayWalkthrough)) { _ in
+            // Dismiss settings sheet first, then start walkthrough
+            showingSettingsSheet = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                navigationPath = NavigationPath()
+                selectedTab = .rings
+                showWalkthrough = true
             }
         }
     }

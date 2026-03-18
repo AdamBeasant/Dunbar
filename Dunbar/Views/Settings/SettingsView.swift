@@ -102,68 +102,198 @@ struct SettingsView: View {
     }
 
     private var premiumCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        Group {
             if premiumManager.isPremium {
-                HStack(spacing: 8) {
-                    Image(systemName: "checkmark.seal.fill")
-                        .font(.system(size: 18))
-                        .foregroundStyle(DunbarTheme.ringColor(for: .core))
-
-                    Text("Premium")
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
-                        .foregroundStyle(DunbarTheme.textPrimary)
-
-                    Spacer()
-
-                    Text("Active")
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        .foregroundStyle(DunbarTheme.ringColor(for: .core))
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(
-                            Capsule()
-                                .fill(DunbarTheme.ringColor(for: .core).opacity(0.12))
-                        )
-                }
+                premiumActiveCard
             } else {
-                HStack(spacing: 8) {
-                    Image(systemName: "lock.fill")
-                        .font(.system(size: 16))
-                        .foregroundStyle(DunbarTheme.textSecondary)
+                premiumUpgradeCard
+            }
+        }
+    }
 
-                    Text("Free Plan")
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
-                        .foregroundStyle(DunbarTheme.textPrimary)
+    private var premiumActiveCard: some View {
+        HStack(spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                DunbarTheme.ringColor(for: .core).opacity(0.15),
+                                DunbarTheme.ringColor(for: .close).opacity(0.10)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 44, height: 44)
 
-                    Spacer()
-
-                    Text("\(people.count)/\(Premium.freeTierPersonLimit) contacts")
-                        .font(.system(size: 13, weight: .medium, design: .rounded))
-                        .foregroundStyle(DunbarTheme.textSecondary)
-                }
-
-                Button {
-                    showingPaywall = true
-                } label: {
-                    Text("Upgrade to Premium")
-                        .font(.system(size: 15, weight: .semibold, design: .rounded))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                }
-                .dunbarPrimaryButton()
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.system(size: 20))
+                    .foregroundStyle(DunbarTheme.ringColor(for: .core))
             }
 
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Dunbar Premium")
+                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .foregroundStyle(DunbarTheme.textPrimary)
+
+                Text("All features unlocked")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundStyle(DunbarTheme.textSecondary)
+            }
+
+            Spacer()
+
+            Text("Active")
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    DunbarTheme.ringColor(for: .core),
+                                    DunbarTheme.ringColor(for: .close)
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                )
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .dunbarCard()
+    }
+
+    private var premiumUpgradeCard: some View {
+        VStack(spacing: 0) {
+            // Top gradient banner
+            premiumBanner
+                .padding(.bottom, 16)
+
+            // Feature list
+            premiumFeatureList
+                .padding(.horizontal, 16)
+                .padding(.bottom, 16)
+
+            // Upgrade button
+            Button {
+                showingPaywall = true
+            } label: {
+                Text("Upgrade to Premium")
+                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .frame(maxWidth: .infinity)
+            }
+            .dunbarPrimaryButton()
+            .padding(.horizontal, 16)
+
+            // Restore
             Button {
                 Task { await premiumManager.restorePurchases() }
             } label: {
                 Text("Restore Purchases")
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundStyle(DunbarTheme.textTertiary)
+            }
+            .padding(.top, 10)
+            .padding(.bottom, 14)
+        }
+        .background(
+            RoundedRectangle(cornerRadius: DunbarTheme.cardRadius, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [DunbarTheme.surface, DunbarTheme.surfaceElevated],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: DunbarTheme.cardRadius, style: .continuous)
+                .strokeBorder(DunbarTheme.border, lineWidth: 1)
+        )
+        .shadow(color: DunbarTheme.cardShadowColor, radius: 22, y: 10)
+    }
+
+    private var premiumBanner: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Unlock your full circle")
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .foregroundStyle(DunbarTheme.textPrimary)
+
+                Text("\(people.count)/\(Premium.freeTierPersonLimit) contacts used")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundStyle(DunbarTheme.textSecondary)
             }
-            .frame(maxWidth: .infinity)
+
+            Spacer()
+
+            premiumMiniRings
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .dunbarCard()
+        .padding(.horizontal, 18)
+        .padding(.vertical, 20)
+        .background(
+            UnevenRoundedRectangle(
+                topLeadingRadius: DunbarTheme.cardRadius,
+                bottomLeadingRadius: 0,
+                bottomTrailingRadius: 0,
+                topTrailingRadius: DunbarTheme.cardRadius,
+                style: .continuous
+            )
+            .fill(
+                LinearGradient(
+                    colors: [
+                        DunbarTheme.ringColor(for: .core).opacity(0.10),
+                        DunbarTheme.ringColor(for: .close).opacity(0.06),
+                        DunbarTheme.ringColor(for: .active).opacity(0.03)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+        )
+    }
+
+    private var premiumMiniRings: some View {
+        let miniRadii: [CGFloat] = [14, 22, 30, 38]
+        return ZStack {
+            ForEach(Array(DunbarRing.allCases.enumerated()), id: \.element.rawValue) { index, ring in
+                Circle()
+                    .stroke(
+                        DunbarTheme.ringColor(for: ring).opacity(0.5),
+                        lineWidth: 1
+                    )
+                    .frame(width: miniRadii[index] * 2, height: miniRadii[index] * 2)
+            }
+
+            Circle()
+                .fill(DunbarTheme.ringColor(for: .core).opacity(0.2))
+                .frame(width: 12, height: 12)
+        }
+    }
+
+    private var premiumFeatureList: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            premiumFeatureRow(icon: "person.3.fill", text: "Track up to 150 relationships")
+            premiumFeatureRow(icon: "arrow.triangle.2.circlepath", text: "Smart rebalancing suggestions")
+            premiumFeatureRow(icon: "bell.fill", text: "Nudges across all circles")
+        }
+    }
+
+    private func premiumFeatureRow(icon: String, text: String) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.system(size: 13))
+                .foregroundStyle(DunbarTheme.ringColor(for: .core))
+                .frame(width: 22)
+
+            Text(text)
+                .font(.system(size: 14, weight: .medium, design: .rounded))
+                .foregroundStyle(DunbarTheme.textSecondary)
+        }
     }
 
     private var reminderCard: some View {
@@ -347,6 +477,20 @@ struct SettingsView: View {
                 rescheduleAll()
             }
             .frame(maxWidth: .infinity)
+            .dunbarSecondaryButton()
+
+            Button {
+                AppSettings.hasCompletedWalkthrough = false
+                NotificationCenter.default.post(name: .replayWalkthrough, object: nil)
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.counterclockwise")
+                        .font(.system(size: 14, weight: .medium))
+                    Text("Replay walkthrough")
+                        .font(.system(size: 15, weight: .medium, design: .rounded))
+                }
+                .frame(maxWidth: .infinity)
+            }
             .dunbarSecondaryButton()
         }
         .frame(maxWidth: .infinity, alignment: .leading)

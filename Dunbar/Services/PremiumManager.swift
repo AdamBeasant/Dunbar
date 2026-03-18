@@ -98,7 +98,7 @@ final class PremiumManager {
     // MARK: - Check Entitlement
 
     func checkEntitlement() async {
-        if let result = await Transaction.currentEntitlement(for: Premium.productID) {
+        for await result in Transaction.currentEntitlements(for: Premium.productID) {
             if let _ = try? Self.checkVerified(result) {
                 isPremium = true
                 return
@@ -110,11 +110,13 @@ final class PremiumManager {
     // MARK: - Transaction Listener
 
     private func listenForTransactions() -> Task<Void, Never> {
-        Task.detached { [weak self] in
+        let premiumProductID = Premium.productID
+
+        return Task.detached { [weak self] in
             for await result in Transaction.updates {
                 if let transaction = try? PremiumManager.checkVerified(result),
-                   transaction.productID == Premium.productID {
-                    await MainActor.run {
+                   transaction.productID == premiumProductID {
+                    await MainActor.run { [weak self] in
                         self?.isPremium = true
                     }
                     await transaction.finish()

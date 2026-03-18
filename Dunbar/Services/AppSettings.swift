@@ -1,5 +1,10 @@
 import Foundation
 
+extension Notification.Name {
+    static let walkthroughSwitchDetailTab = Notification.Name("walkthroughSwitchDetailTab")
+    static let replayWalkthrough = Notification.Name("replayWalkthrough")
+}
+
 enum AppSettings {
     static let appearanceModeKey = "settings.appearance.mode"
     static let reminderDefaultHourKey = "settings.reminder.defaultHour"
@@ -28,6 +33,9 @@ enum AppSettings {
     static let widgetSnapshotKey = "settings.widget.snapshot"
     static let ringHealthLastBandKey = "settings.ringHealth.lastBand"
     static let familyGraphV2MigrationCompleteKey = "settings.familyGraphV2.migrationComplete"
+    static let hasCompletedOnboardingKey = "settings.onboarding.completed"
+    static let userNameKey = "settings.onboarding.userName"
+    static let hasCompletedWalkthroughKey = "settings.walkthrough.completed"
 
     static var defaultReminderHour: Int {
         get { integer(forKey: reminderDefaultHourKey, defaultValue: 10) }
@@ -122,6 +130,21 @@ enum AppSettings {
     static var isFamilyGraphV2MigrationComplete: Bool {
         get { bool(forKey: familyGraphV2MigrationCompleteKey, defaultValue: false) }
         set { UserDefaults.standard.set(newValue, forKey: familyGraphV2MigrationCompleteKey) }
+    }
+
+    static var hasCompletedOnboarding: Bool {
+        get { bool(forKey: hasCompletedOnboardingKey, defaultValue: false) }
+        set { UserDefaults.standard.set(newValue, forKey: hasCompletedOnboardingKey) }
+    }
+
+    static var userName: String? {
+        get { UserDefaults.standard.string(forKey: userNameKey) }
+        set { UserDefaults.standard.set(newValue, forKey: userNameKey) }
+    }
+
+    static var hasCompletedWalkthrough: Bool {
+        get { bool(forKey: hasCompletedWalkthroughKey, defaultValue: false) }
+        set { UserDefaults.standard.set(newValue, forKey: hasCompletedWalkthroughKey) }
     }
 
     static var snoozePresets: [Int] {

@@ -17,6 +17,7 @@ final class Person {
     var createdAt: Date = Date.now
     var isArchived: Bool = false
     var isPinned: Bool = false
+    var isDummyData: Bool = false
     
     /// JPEG photo data (compressed). nil = no photo, show ring glyph only.
     @Attribute(.externalStorage)

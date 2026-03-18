@@ -83,8 +83,11 @@ struct DunbarApp: App {
                 .environment(hapticFeedback)
                 .environment(premiumManager)
                 .task {
-                    // Request notification permission on first launch
-                    await nudgeScheduler.requestPermissionIfNeeded()
+                    // Only auto-request notifications if user already completed onboarding
+                    // (new users get prompted during the onboarding flow instead)
+                    if AppSettings.hasCompletedOnboarding {
+                        await nudgeScheduler.requestPermissionIfNeeded()
+                    }
                     appLockManager.refreshBiometricAvailability()
                     FamilyGraphMigrator.migrateIfNeeded(context: sharedModelContainer.mainContext)
                     FamilyGraphV2Migrator.migrateIfNeeded(context: sharedModelContainer.mainContext)
@@ -100,7 +103,7 @@ struct DunbarApp: App {
                     }
                     let context = sharedModelContainer.mainContext
                     let descriptor = FetchDescriptor<Person>(
-                        predicate: #Predicate { !$0.isArchived }
+                        predicate: #Predicate { !$0.isArchived && !$0.isDummyData }
                     )
                     if let people = try? context.fetch(descriptor) {
                         await nudgeScheduler.rescheduleAll(people: people)
@@ -114,7 +117,7 @@ struct DunbarApp: App {
                 // Update widget snapshot before backgrounding so it stays fresh
                 let context = sharedModelContainer.mainContext
                 let descriptor = FetchDescriptor<Person>(
-                    predicate: #Predicate { !$0.isArchived }
+                    predicate: #Predicate { !$0.isArchived && !$0.isDummyData }
                 )
                 if let people = try? context.fetch(descriptor) {
                     WidgetSnapshotStore.write(

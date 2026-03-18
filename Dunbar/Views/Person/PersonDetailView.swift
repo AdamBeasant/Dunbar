@@ -169,17 +169,38 @@ struct PersonDetailView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                profileHeader
-                statsRow.padding(.bottom, 14)
-                doneButton.padding(.bottom, 18)
-                tabSelector.padding(.bottom, 16)
-                tabContent
-                secondaryActions
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                VStack(spacing: 0) {
+                    profileHeader
+                    statsRow.padding(.bottom, 14)
+                    doneButton.padding(.bottom, 18)
+                    tabSelector.padding(.bottom, 16)
+                        .id("tabSelector")
+                    tabContent
+                    secondaryActions
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 24)
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 24)
+            .onReceive(NotificationCenter.default.publisher(for: .walkthroughSwitchDetailTab)) { notification in
+                if let tabName = notification.object as? String {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        switch tabName {
+                        case "overview": selectedTab = .overview
+                        case "context": selectedTab = .context
+                        case "history": selectedTab = .history
+                        default: break
+                        }
+                    }
+                    // Scroll after a brief delay so the tab content has rendered
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            scrollProxy.scrollTo("tabSelector", anchor: .top)
+                        }
+                    }
+                }
+            }
         }
         .background(DunbarTheme.background)
         .navigationBarTitleDisplayMode(.inline)
